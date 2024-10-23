@@ -26,7 +26,7 @@ This project aims to develop an **AI-based diagnostic tool** that can analyze me
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/ai-medical-diagnostic-tool.git
+   git clone https://github.com/NiksheyYadav/ai-medical-diagnostic-tool.git
    ```
 
 2. **Install dependencies**:
