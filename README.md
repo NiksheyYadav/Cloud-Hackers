@@ -1,4 +1,4 @@
-```md
+
 # AI-based Diagnostic Tool for Medical Image Analysis
 
 ## Problem Statement
@@ -53,7 +53,3 @@ This project is licensed under the MIT License.
 
 ## Contributing
 Feel free to submit a pull request or report issues. Contributions are welcome!
-
-```
-
-This README provides an overview of the tool's purpose, features, how to set up the environment, and guidelines for contribution. Let me know if you'd like any adjustments!
