@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Diagnosis Site</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header nav ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        header nav ul li {
+            margin: 0 15px;
+        }
+
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 40px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .diagnosis-options {
+            margin-bottom: 30px;
+        }
+
+        .option {
+            margin: 10px 0;
+        }
+
+        .option input {
+            margin-right: 10px;
+        }
+
+        .upload-section {
+            margin-top: 30px;
+            position: relative;
+            max-width: 100%;
+        }
+
+        .file-upload-container {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            border: 2px dashed #007bff;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+        }
+
+        input[type="file"]:hover {
+            border-color: #0056b3;
+        }
+
+        .delete-button {
+            position: absolute;
+            right: 10px;
+            top: 5%;
+            transform: translateY(-50%);
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #imagePreview {
+            margin-top: 20px;
+            max-height: 400px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #imagePreview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .diagnosis-result {
+            margin-top: 40px;
+            font-size: 1.2rem;
+            color: green;
+            display: none; /* Initially hidden */
+        }
+
+        footer {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            header nav ul {
+                flex-direction: column;
+            }
+
+            .option {
+                display: block;
+            }
+
+            main {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AI Diagnosis</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="diagnosis-options">
+            <h2>Select Diagnosis Type</h2>
+            <div class="option">
+                <input type="radio" id="xray" name="diagnosis" value="xray">
+                <label for="xray">X-Ray</label>
+            </div>
+            <div class="option">
+                <input type="radio" id="ctscan" name="diagnosis" value="ctscan">
+                <label for="ctscan">CT-Scan</label>
+            </div>
+            <div class="option">
+                <input type="radio" id="mri" name="diagnosis" value="mri">
+                <label for="mri">MRI</label>
+            </div>
+        </section>
+
+        <section class="upload-section">
+            <h2>Upload Your Image</h2>
+            <div class="file-upload-container">
+                <input type="file" id="imageUpload" accept="image/*">
+                <button class="delete-button" id="deleteButton">Delete</button>
+            </div>
+            <div id="imagePreview"></div>
+        </section>
+
+        <section>
+            <button type="submit" id="diagnoseButton">Start AI Diagnosis</button>
+        </section>
+
+        <div class="diagnosis-result" id="diagnosisResult">
+            AI Diagnosis Result: <strong>Normal Scan</strong>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 AI Diagnosis. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('deleteButton').addEventListener('click', function() {
+            const fileInput = document.getElementById('imageUpload');
+            fileInput.value = ''; // Clear the file input
+            document.getElementById('imagePreview').innerHTML = ''; // Clear the preview
+            document.getElementById('diagnosisResult').style.display = 'none'; // Hide diagnosis result
+        });
+
+        document.getElementById('imageUpload').addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imagePreview').innerHTML = `<img src="${e.target.result}" alt="Uploaded Image">`;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('diagnoseButton').addEventListener('click', function() {
+            const fileInput = document.getElementById('imageUpload').value;
+            if (fileInput) {
+                // Simulate AI Diagnosis
+                document.getElementById('diagnosisResult').style.display = 'block'; // Show the result
+            } else {
+                alert('Please upload an image before diagnosis.');
+            }
+        });
+    </script>
+</body>
+</html>
