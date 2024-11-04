@@ -1,0 +1,25 @@
+MRI-Tumor-Diagnosis/
+├── data/                                 # Folder to store MRI datasets
+│   ├── raw/                              # Raw data (DICOM or other formats directly from TCIA)
+│   ├── processed/                        # Processed data (PNG/JPG/normalized images)
+│   ├── train/                            # Training dataset
+│   ├── val/                              # Validation dataset
+│   └── test/                             # Test dataset
+├── src/                                  # Source code for the project
+│   ├── __init__.py                       # Allows src to be imported as a module
+│   ├── config.py                         # Configuration file (e.g., file paths, hyperparameters)
+│   ├── data_preprocessing.py             # Script for data loading and preprocessing
+│   ├── model_architecture.py             # Defines the neural network model architecture
+│   ├── train.py                          # Main training script
+│   ├── evaluate.py                       # Model evaluation script
+│   ├── inference.py                      # Script for making predictions on new data
+│   └── utils.py                          # Utility functions (e.g., metrics, logging)
+├── models/                               # Stores model weights and checkpoints
+│   ├── checkpoints/                      # Intermediate checkpoints during training
+│   └── final_model.pth                   # Saved final model weights after training
+├── results/                              # Folder for storing results like plots, metrics, etc.
+│   ├── confusion_matrix.png              # Confusion matrix image
+│   ├── roc_curve.png                     # ROC curve image
+│   └── logs/                             # Logs generated during training and evaluation
+├── README.md                             # Project overview and instructions
+└── requirements.txt                      # Dependencies list
